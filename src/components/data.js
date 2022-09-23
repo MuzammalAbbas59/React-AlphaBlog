@@ -8,6 +8,8 @@ import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import NewArticle from './articles/new';
 import React from 'react'
 import NewCategory from './categories/new';
+import EditArticle from './articles/edit';
+import EditCategory from './categories/edit';
 
 const articles_URL = "http://[::1]:4000/articles";
 const users_URL = "http://[::1]:4000/users";
@@ -79,6 +81,9 @@ function Data() {
 					<Route path="/articles/new">
 						<NewArticle />
 					</Route>
+					<Route path="/articles/34/edit">
+						<EditArticle />
+					</Route>
 
 					<Route path="/articles">
 						<Articles articles={articles} />
@@ -88,6 +93,10 @@ function Data() {
 					<Route path="/categories/new">
 						<NewCategory />
 					</Route>
+					<Route path="/categories/12/edit">
+						<EditCategory />
+					</Route>
+
 
 					<Route path="/categories">
 						<Categories categories={categories} />
