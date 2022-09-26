@@ -12,63 +12,11 @@ import EditArticle from './articles/edit';
 import EditCategory from './categories/edit';
 import DeleteCategory from './categories/delete';
 import ShowCategory from './categories/show';
-
-const articles_URL = "http://[::1]:4000/articles";
-const users_URL = "http://[::1]:4000/users";
-const categories_URL = "http://[::1]:4000/categories";
+import DeleteArticle from './articles/delete';
 
 
-function get_categories_data() {
-
-	return axios.get(categories_URL).then((response) => response.data)
-}
-function get_articles_data() {
-
-	return axios.get(articles_URL).then((response) => response.data)
-
-}
-
-function get_users_data() {
-
-	return axios.get(users_URL).then((response) => response.data)
-
-}
 
 function Data() {
-	const [articles, setArticles] = useState([]);
-	const [users, setUsers] = useState([]);
-	const [categories, setCategories] = useState([]);
-
-	useEffect(() => {
-		let mounted = true;
-		get_articles_data().then((items) => {
-			if (mounted) {
-				setArticles(items);
-			}
-		});
-		return () => { (mounted = false) };
-	}, []);
-
-	useEffect(() => {
-		let mounted = true;
-		get_users_data().then((items) => {
-			if (mounted) {
-				setUsers(items);
-			}
-		});
-		return () => { (mounted = false) };
-	}, []);
-
-	useEffect(() => {
-		let mounted = true;
-		get_categories_data().then((items) => {
-			if (mounted) {
-				setCategories(items);
-			}
-		});
-		return () => { (mounted = false) };
-	}, []);
-
 	return (
 		<div>
 			<BrowserRouter>
@@ -87,9 +35,12 @@ function Data() {
 					<Route path="/articles/:id/edit">
 						<EditArticle />
 					</Route>
+					<Route path="/articles/:id/delete">
+						<DeleteArticle />
+					</Route>
 
 					<Route path="/articles">
-						<Articles articles={articles} />
+						<Articles />
 					</Route>
 
 
@@ -97,7 +48,7 @@ function Data() {
 						<NewCategory />
 					</Route>
 					<Route path="/categories/:id">
-						<ShowCategory categories={categories}/>
+						<ShowCategory />
 					</Route>
 
 					<Route path="/categories/:id/edit">
@@ -109,11 +60,11 @@ function Data() {
 					</Route>
 
 					<Route path="/categories">
-						<Categories categories={categories} />
+						<Categories />
 
 					</Route>
 					<Route path="/users">
-						<Users users={users} />
+						<Users/>
 
 					</Route>
 

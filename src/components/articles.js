@@ -1,15 +1,35 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import TimeAgo from 'timeago-react';
-import {Link} from 'react-router-dom';
+import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
 
-function Articles(props) {
+const articles_URL = "http://[::1]:4000/articles";
+
+function get_articles_data() {
+
+	return axios.get(articles_URL).then((response) => response.data)
+
+}
+function Articles() {
+	const [articles, setArticles] = useState([]);
+	
+	useEffect(() => {
+		let mounted = true;
+		get_articles_data().then((items) => {
+			if (mounted) {
+				setArticles(items);
+			}
+		});
+		return () => { (mounted = false) };
+	}, []);
+
 
 	return (
 		<div>
 			<h1>Articles from api are </h1>
 
 			<div className="container ">
-				{props.articles.map((article) => {
+				{articles.map((article) => {
 					return (
 						<div key={article.id}>
 
@@ -70,7 +90,6 @@ function Articles(props) {
 					)
 				})}
 			</div>
-
 		</div>
 	)
 

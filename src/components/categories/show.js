@@ -8,7 +8,7 @@ function get_category_data(category_URL) {
 }
 
 
-function Show(props) {
+function Show() {
     const params=useParams();
     const category_URL = ("http://[::1]:4000/categories/"+params.id);
 	

@@ -2,10 +2,6 @@ import React from 'react'
 import axios from 'axios';
 import { Redirect, useParams,useHistory } from 'react-router-dom';
 
-function redirect_to_categories(){
- 
-}
-
 function Edit() {
   const params = useParams();
   let history=useHistory();

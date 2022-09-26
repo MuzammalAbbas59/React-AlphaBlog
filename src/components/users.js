@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useState ,useEffect} from "react";
 import TimeAgo from 'timeago-react';
 import {Link} from 'react-router-dom';
+import axios from "axios";
+const users_URL = "http://[::1]:4000/users";
+
+
+
+function get_users_data() {
+
+	return axios.get(users_URL).then((response) => response.data)
+
+}
 
 function Users(props) {
+	const [users, setUsers] = useState([]);
+	useEffect(() => {
+		let mounted = true;
+		get_users_data().then((items) => {
+			if (mounted) {
+				setUsers(items);
+			}
+		});
+		return () => { (mounted = false) };
+	}, []);
+
 
     return (
        
@@ -10,7 +31,7 @@ function Users(props) {
 			<h1>Users from api are </h1>
 
 			<div className="container ">
-				{props.users.map((user) => {
+				{users.map((user) => {
 					return (
 						<div key={user.id}>
 

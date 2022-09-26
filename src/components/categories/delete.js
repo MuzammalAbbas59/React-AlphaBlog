@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import { Redirect, Route, useParams } from 'react-router-dom';
 import Categories from '../categories';
 
-function DeleteCategory(props) {
+function DeleteCategory() {
 const params=useParams();
 	console.log(params.id);
 	useEffect(() => {
-		// DELETE request using axios with error handling
+		
 		axios.delete('http://[::1]:4000/categories/'+params.id)
 				
 }, []);

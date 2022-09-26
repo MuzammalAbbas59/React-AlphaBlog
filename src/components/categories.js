@@ -2,9 +2,14 @@ import React from 'react'
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import EditCategories from './categories/edit';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
+const categories_URL = "http://[::1]:4000/categories";
 
 
+function get_categories_data() {
+
+	return axios.get(categories_URL).then((response) => response.data)
+}
 // function DeleteCategory(props){
 
 // 	console.log({props});
@@ -15,6 +20,16 @@ import { useEffect } from 'react';
 // }, []);
 // }
 function Categories(props) {
+	const [categories, setCategories] = useState([]);
+	useEffect(() => {
+		let mounted = true;
+		get_categories_data().then((items) => {
+			if (mounted) {
+				setCategories(items);
+			}
+		});
+		return () => { (mounted = false) };
+	}, []);
 
 
 	return (
@@ -23,7 +38,7 @@ function Categories(props) {
 			<h1>Categories from api are </h1>
 
 			<div className="container ">
-				{props.categories.map((category) => {
+				{categories.map((category) => {
 
 					return (
 						<div key={category.id}>
