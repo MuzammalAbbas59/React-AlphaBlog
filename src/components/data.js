@@ -10,10 +10,13 @@ import React from 'react'
 import NewCategory from './categories/new';
 import EditArticle from './articles/edit';
 import EditCategory from './categories/edit';
+import DeleteCategory from './categories/delete';
+import ShowCategory from './categories/show';
 
 const articles_URL = "http://[::1]:4000/articles";
 const users_URL = "http://[::1]:4000/users";
 const categories_URL = "http://[::1]:4000/categories";
+
 
 function get_categories_data() {
 
@@ -81,7 +84,7 @@ function Data() {
 					<Route path="/articles/new">
 						<NewArticle />
 					</Route>
-					<Route path="/articles/34/edit">
+					<Route path="/articles/:id/edit">
 						<EditArticle />
 					</Route>
 
@@ -93,10 +96,17 @@ function Data() {
 					<Route path="/categories/new">
 						<NewCategory />
 					</Route>
-					<Route path="/categories/12/edit">
+					<Route path="/categories/:id">
+						<ShowCategory categories={categories}/>
+					</Route>
+
+					<Route path="/categories/:id/edit">
 						<EditCategory />
 					</Route>
 
+					<Route path="/categories/:id/delete">
+						<DeleteCategory />
+					</Route>
 
 					<Route path="/categories">
 						<Categories categories={categories} />

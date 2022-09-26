@@ -28,9 +28,9 @@ function Articles(props) {
 
 											<h5 className="card-title">{article.title}</h5>
 											<p className="card-text">{article.description}</p>
-											<Link to="/articles" className="btn btn-outline-success" >View</Link>&nbsp;
-											<Link to="/articles" className="btn btn-outline-warning" >Edit</Link>&nbsp;
-											<Link to="/users" className="btn btn-outline-danger" >Delete</Link>
+											<Link to={"/articles/"+article.id} className="btn btn-outline-success" >View</Link>&nbsp;
+											<Link to={"/articles/" + article.id + "/edit"} className="btn btn-outline-warning" >Edit</Link>&nbsp;
+											<Link to={"/articles/" + article.id + "/delete"}  className="btn btn-outline-danger" >Delete</Link>
     {/* <% if loggedin? && (current_user == article.user || current_user.admin?) %>
     <%= link_to "Edit", edit_article_path(article), className: "btn btn-outline-warning" %>
     <%= link_to "Delete", article_path(article), className: "btn btn-outline-danger",
