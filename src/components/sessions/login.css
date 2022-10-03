@@ -1,0 +1,25 @@
+#login{
+background-color: #4ACBF0;
+width: 73%;
+height: 360px;
+padding-top: 3px;
+margin-top: 20px;
+margin: auto;
+}
+
+#errors{
+    padding-top: 3px;
+    margin-top: 20px;
+    }
+.fullWidth{
+
+background-color: white;
+border-radius: 0%;
+height: 10px;
+width:100%;
+border:5px;
+}
+
+.loginheading{
+    margin-top: 25px;
+}

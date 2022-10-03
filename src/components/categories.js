@@ -3,8 +3,11 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import EditCategories from './categories/edit';
 import axios from 'axios';
 import { useEffect,useState } from 'react';
-const categories_URL = "http://[::1]:4000/categories";
+import { Container } from "@mui/system";
+import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 
+
+const categories_URL = "http://[::1]:4000/categories";
 
 function get_categories_data() {
 
@@ -31,83 +34,70 @@ function Categories(props) {
 		return () => { (mounted = false) };
 	}, []);
 
+  const [admin, setadmin] = useState(false);
+  useEffect(() => {
+   axios.get("http://localhost:4000/loggedin",
+    { withCredentials: true }
+   ).then(response => {
+  
+    if(response.data.user.admin){
+     setadmin(true);
+    }
+   
+   })
+  }, []);
+   
+  
+  
+  
+
 
 	return (
 		<div>
 
-			<h1>Categories from api are </h1>
+<h1>Categories:</h1>
+      <Container>
+        {categories.map((category) => {
+          return (
+                  <div key={category.id}>
+                    <Grid container justifyContent="center" alignItems="center">
+                      <Grid xs={8}>
+                        <Card variant = "outlined">
+                          <CardContent>
+                            <Typography variant="h5" component="div">
+                              <strong>{category.id}</strong>
+                            </Typography>
+                            <Typography variant="p" component="div">
+                              {category.name}
+                            </Typography>
+                            <br></br>
+                            {/* <Button href={'/categories/' + category.id + '/view'}
+							 variant="outlined" color="success">View</Button>&nbsp;
+                            <Button href={'/categories/' + category.id + '/edit'}
+							 variant="outlined" color="info">Edit</Button>&nbsp;
+							 <Button href={'/categories/' + category.id + '/delete'}
+							 variant="outlined" color="error">Delete</Button>&nbsp;
+							  */}
+                			<Button href={'/categories/' + category.id+ '/show'}
+											 variant="outlined" color="success">View</Button>&nbsp;
+            {admin && 
+            <>
+											<Button href={'/categories/' + category.id + '/edit'} 
+											variant="outlined" color="info">Edit</Button>&nbsp;
+        			<Button href={'/categories/' + category.id + '/delete'}
+											 variant="outlined" color="error">Delete</Button>&nbsp; 
+            </>
+        }
 
-			<div className="container ">
-				{categories.map((category) => {
-
-					return (
-						<div key={category.id}>
-
-							<div className="row justify-content-md-center">
-								<div className="col-8 mt-3 ">
-
-									<div className="card text-center shadow mb-3 bg-white rounded">
-										{/* <div className="card-header font-italic">
-                                        <p2>{article.user}</p2>
-                                        <div className="mt-2">
-                                            <p2>{article.categories}</p2>
-                                        </div>
-
-                                    </div> */}
-										<div className="card-body">
-
-											<h5 className="card-title">{category.id}</h5>
-											<p className="card-text">{category.name}</p>
-											<Link to={"/categories/" + category.id} className="btn btn-outline-success" >View</Link> &nbsp;
-											<Link to={"/categories/" + category.id + "/edit"} category={category.id} className="btn btn-outline-warning" >Edit</Link>&nbsp;
-											{/* <Link to="/categories"  className="btn btn-outline-danger" >Delete</Link> */}
-											<Link to={"/categories/" + category.id + "/delete"} category={category.id}
-											 className="btn btn-outline-warning" >Delete</Link>&nbsp;
-
-											{/* <button onClick={()=>DeleteCategory(category.id)} className="btn btn-outline-danger" >
-  Delete
-</button> */}
-											{/* <Link to={{ 
-  pathname: `/categories/+${category.id}+"/edit`, 
-  query: {
-    id: category.id, 
-  } 
-}}>Edit</Link>
-	 */}
-											{/* <% if loggedin? && (current_user == article.user || current_user.admin?) %>
-<%= link_to "Edit", edit_article_path(article), className: "btn btn-outline-warning" %>
-<%= link_to "Delete", article_path(article), className: "btn btn-outline-danger",
-                                       data: { turbo_confirm: "Are You Sure ?",
-                                        turbo_method: :delete } %>
-                                        <% end %> */}
-
-										</div>
-										<div className="card-footer text-muted">
-											{/* <small> TimeAgo{article.created_at}, 
-edited time_ago_in_words{article.updated_at} ago</small>
-                                     */}
-											{/* <p1> Articles Count =  &nbsp;
-                                                {category.articles.count}
-                                            </p1> */}
-										</div>
-
-
-									</div>
-
-								</div>
-
-								<div className="row mb-5 text-center">
-
-									{/* <%= link_to "[Create a New Article]", new_article_path, className: "text-success " %> */}
-
-								</div>
-
-							</div>
-						</div>
-					)
-				})}
-			</div>
-
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                      </Grid>
+                      <br></br><br></br>
+                  </div>
+          )
+        })}
+      </Container>
 		</div>
 
 

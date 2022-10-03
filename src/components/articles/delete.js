@@ -8,9 +8,10 @@ const params=useParams();
 	console.log(params.id);
 	useEffect(() => {
 		
-		axios.delete('http://[::1]:4000/articles/'+params.id)
-				
-}, []);
+		axios.delete('http://[::1]:4000/articles/'+params.id,{withCredentials: true} 
+  
+  )}
+	,[]);
 
 
   return (

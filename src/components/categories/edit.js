@@ -1,66 +1,109 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Redirect, useParams,useHistory } from 'react-router-dom';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import './category.css'
+import { Grid } from '@mui/material';
+
+function get_category_data(category_URL) {
+  console.log(category_URL);
+  return axios.get(category_URL).then((response) => response.data)
+}
+
 
 function Edit() {
   const params = useParams();
-  let history=useHistory();
-   console.log(params.id)
-    const [formValue, setformValue] = React.useState({
-        name: ''
-            }); 
-          // const id=props.match.params.id
-      const handleSubmit = (event) => {
-        
-  const loginFormData = new FormData();
-  loginFormData.append("name", formValue.name)
-      
-  try {
-    // make axios post request
-    const response = axios({
-      method: "put",
-      url: ('http://[::1]:4000/categories/'+params.id),
-      data: loginFormData,
-      headers: { "Content-Type": "form-data" },
-    });
+  const category_URL = ("http://[::1]:4000/categories/" + params.id);
 
-  } catch(error) {
-    console.log(error)
+  const [category, setcategory] = useState([]);
+
+  useEffect(() => {
+    let mounted = true;
+    get_category_data(category_URL).then((item) => {
+      if (mounted) {
+        setcategory(item);
+      }
+    });
+    return () => { (mounted = false) };
+  }, []);
+
+  useEffect(() => {
+    setformValue(category)
+  }, []);
+
+
+  let history = useHistory();
+  console.log(params.id)
+  const [formValue, setformValue] = React.useState({
+    name: category.name
+  });
+  // const id=props.match.params.id
+  const handleSubmit = (event) => {
+
+    const loginFormData = new FormData();
+    loginFormData.append("name", formValue.name)
+
+    axios.put(("http://localhost:4000/categories/" + params.id), {
+      name: formValue.name
+    },
+      { withCredentials: true }
+    ).then(response => {
+      console.log("registation response", response)
+      if (response.status === "201" || response.statusText === 'Created') {
+        console.log("success")
+        // setCurrentUser(response.data.user)
+        //  history.push('/articles')   
+      }
+    })
   }
-  finally{
-  history.push("/categories")
+
+
+  const handleChange = (event) => {
+    setformValue({
+      ...formValue,
+      [event.target.name]: event.target.value
+    });
   }
-        }
-      
-      const handleChange = (event) => {
-          setformValue({
-            ...formValue,
-            [event.target.name]: event.target.value
-          });
-        }
-  
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-      <p>Update Category</p>
-      <input
-        type="string"
-        name="name"
-        placeholder="enter name"
-        value={formValue.name}
-        onChange={handleChange}
-      />
-      <button
-        type="submit"
-      >
-        Update
-      </button>
-   
-    </form>
+      <h1 class="loginheading">Update Category
+      </h1>
+      <Grid container id="category" >
+
+        <Box
+          sx={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: 4,
+            width: 700,
+            maxWidth: '100%',
+          }}
+        >
+
+          <h1 class="col-1 col-form-label text-light">name:</h1>
+          <form onSubmit={handleSubmit}>
+            <TextField fullWidth
+              id="fullWidth"
+              type="string"
+              name="name"
+              placeholder="enter name"
+              value={formValue.name}
+              onChange={handleChange}
+            />
+            <button class="btn btn-outline-light btn-lg mt-4"
+              type="submit"
+            >
+              Update Category
+            </button>
+          </form>
+        </Box>
+      </Grid>
     </div>
 
   )
-  
+
 }
 
 export default Edit

@@ -1,10 +1,16 @@
+import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
+import { Container } from "@mui/system";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import TimeAgo from 'timeago-react';
-import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
-
+// import TimeAgo from 'timeago-react';
+import { Link } from 'react-router-dom';
 const articles_URL = "http://[::1]:4000/articles";
 
+function deletearticle(id){
+console.log("id ",id);
+axios.delete('http://[::1]:4000/articles/'+id,{withCredentials: true} )
+  
+}
 function get_articles_data() {
 
 	return axios.get(articles_URL).then((response) => response.data)
@@ -12,7 +18,28 @@ function get_articles_data() {
 }
 function Articles() {
 	const [articles, setArticles] = useState([]);
-	
+
+
+ const [CurrentUser, setCurrentUser] = useState([]);
+ const [admin, setadmin] = useState([]);
+const check=false;
+useEffect(() => {
+ axios.get("http://localhost:4000/loggedin",
+  { withCredentials: true }
+ ).then(response => {
+
+  console.log("get response", response.data.user.admin)
+     if(response.data.user){
+       console.log("responseuser",response.data.user);
+   setCurrentUser(response.data.user.id);
+  }
+  if(response.data.user.admin){
+   setadmin(true);
+  }
+ 
+ })
+}, []);
+ 
 	useEffect(() => {
 		let mounted = true;
 		get_articles_data().then((items) => {
@@ -23,78 +50,54 @@ function Articles() {
 		return () => { (mounted = false) };
 	}, []);
 
-
+var flag=true;
 	return (
 		<div>
 			<h1>Articles from api are </h1>
-
-			<div className="container ">
+			<Container>
 				{articles.map((article) => {
+     
 					return (
 						<div key={article.id}>
+							<Grid container justifyContent="center" alignItems="center">
+								<Grid xs={8}>
+									<Card variant="outlined" >
+										<CardContent>
+											<Typography variant="h5" component="div">
+												<strong>{article.title}</strong>
+											</Typography>
+											<Typography variant="p" component="div">
+												{article.description}
+											</Typography>
+											<br></br>
+											<Button href={'/articles/' + article.id + '/show'}
+											 variant="outlined" color="success">View</Button>&nbsp;
+												
+           {article.user_id == CurrentUser &&
+											<>
+              <Button href={"/articles/" + article.id + "/edit"}
+														  variant="outlined">Edit</Button>
 
-							<div className="row justify-content-md-center">
-								<div className="col-8 mt-3 ">
+              <Button href={"/articles/" + article.id + "/delete"}
+														 variant="outlined" >	Delete</Button>
+          						</>
+													}
+           
 
-									<div className="card text-center shadow mb-3 bg-white rounded">
-										<div className="card-header font-italic">
-											<p2>{article.user}</p2>
-											<div className="mt-2">
-												<p2>{article.categories}</p2>
-											</div>
-
-										</div>
-										<div className="card-body">
-
-											<h5 className="card-title">{article.title}</h5>
-											<p className="card-text">{article.description}</p>
-											<Link to={"/articles/"+article.id} className="btn btn-outline-success" >View</Link>&nbsp;
-											<Link to={"/articles/" + article.id + "/edit"} className="btn btn-outline-warning" >Edit</Link>&nbsp;
-											<Link to={"/articles/" + article.id + "/delete"}  className="btn btn-outline-danger" >Delete</Link>
-    {/* <% if loggedin? && (current_user == article.user || current_user.admin?) %>
-    <%= link_to "Edit", edit_article_path(article), className: "btn btn-outline-warning" %>
-    <%= link_to "Delete", article_path(article), className: "btn btn-outline-danger",
-                                           data: { turbo_confirm: "Are You Sure ?",
-                                            turbo_method: :delete } %>
-    <% end %> */}
-
-										</div>
-										<div className="card-footer text-muted">
-											 {/* <small> TimeAgo{article.created_at}, 
- edited time_ago_in_words{article.updated_at} ago</small>
-										 */}
-										 <p1> Created  &nbsp;
-<TimeAgo
-  datetime={article.created_at}
-  locale='ENG'
-/> </p1>
-<p1> , Updated &nbsp;
-<TimeAgo
-  datetime={article.updated_at}
-  locale='ENG'
-/> </p1> </div> 
-
-
-									</div>
-
-								</div>
-
-								<div className="row mb-5 text-center">
-
-									{/* <%= link_to "[Create a New Article]", new_article_path, className: "text-success " %> */}
-
-								</div>
-
-							</div>
+          
+         
+										</CardContent>
+									</Card>
+								</Grid>
+							</Grid>
+							<br></br><br></br>
 						</div>
 					)
 				})}
-			</div>
+			</Container>
 		</div>
 	)
-
 }
-
 
 
 

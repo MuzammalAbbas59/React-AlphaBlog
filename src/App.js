@@ -4,9 +4,11 @@ import Data from './components/data';
 import ShowArticle from './components/articles/show';
 import ShowUser from './components/users/show';
 import Articles from './components/articles';
+import Footer from './components/footer';
+import Navbar from './components/Navbar';
 const show_articles_URL = "http://[::1]:4000/articles/id";
 
-function ProductWrapper (){
+function ProductWrapper() {
   const { id } = useParams();
   return <ShowArticle id={id} />
 };
@@ -15,6 +17,8 @@ function App() {
 
   return (
     <div className="App">
+			{/* <Navbar></Navbar> */}
+
       <BrowserRouter>
         <Switch>
           {/* <Route path='/articles/${articles?.id}'>
@@ -29,8 +33,8 @@ function App() {
           </Route>
         </Switch>
       </BrowserRouter>
-       <Data />
-     
+      <Data />
+      <Footer></Footer>
     </div>
   );
 }

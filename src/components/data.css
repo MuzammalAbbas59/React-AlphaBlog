@@ -1,0 +1,49 @@
+
+#navbar {
+    background-color: black !important;
+}
+.nav-link{
+    color: white !important;
+}
+.nav-link:hover{
+    color: #928f8f;
+}
+.navbar-title{
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    float: left;
+}
+.footer{
+    position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+    
+}
+
+.css-b6licw-MuiBottomNavigation-root{
+    background-color: black !important;
+}
+#jmbotron{
+    text-align: center;
+    background-image: url("bg1.jpg");
+    background-position: center;
+    background-size:cover;
+    height: 475px;
+    color: white;
+    padding-top: 100px;
+ }
+
+ 
+
+#search{
+    display: flex;
+    flex-direction:row;
+}
+#title{
+    margin-left: 15px;
+}

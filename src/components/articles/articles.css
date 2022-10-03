@@ -1,0 +1,24 @@
+#article{
+    background-color: #4ACBF0;
+    width: 73%;
+    height: 300px;
+    padding-top: 10px;
+    margin-top: 20px;
+    margin: auto;
+    }
+    #fullWidth{
+    
+    background-color: white;
+    border-radius: 0%;
+    height: 10px;
+    width:100%;
+    border:5px;
+    }
+    
+    #card{
+margin-top:60px;
+
+    }
+    .loginheading{
+        margin-top: 25px;
+    }

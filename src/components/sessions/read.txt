@@ -1,0 +1,17 @@
+   {article.userid == CurrentUser &&
+            <>
+              {flag = false}
+              <Button href={"/articles/" + article.id + "/edit"} size="small">Edit</Button>
+
+              <Button href={"/articles/" + article.id  + "/delete"} size="small">Delete</Button>
+            </>
+          }
+          {admin &&
+            <>
+              {flag &&
+                <Button href={"/articles/" + article.id  + "/delete"} size="small">Delete</Button>
+              }
+            </>
+
+          }
+         
