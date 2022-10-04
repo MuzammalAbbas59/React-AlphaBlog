@@ -60,7 +60,7 @@ function ShowArticle() {
   return (
 
     <Grid container justifyContent="center" id="card">
-      {console.log("article", article.user_id)}
+      {console.log("article", article)}
       {console.log("user", CurrentUser)}
       {console.log("check", check)}
       <Card sx={{ minWidth: 445, m: 5 }}>
@@ -71,12 +71,6 @@ function ShowArticle() {
           image={require('./articles.jpg')}
         />
         <div key={article.id}>
-          {/* {console.log(category.id)} */}
-          <div>
-
-          </div>
-        </div>
-
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             <p className="card-text">{article.title}</p>
@@ -95,6 +89,8 @@ function ShowArticle() {
             </>
               }
         </CardActions>
+
+        </div>
       </Card>
     </Grid>
   )

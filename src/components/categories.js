@@ -1,6 +1,4 @@
 import React from 'react'
-import { BrowserRouter, Link, Route } from 'react-router-dom';
-import EditCategories from './categories/edit';
 import axios from 'axios';
 import { useEffect,useState } from 'react';
 import { Container } from "@mui/system";
@@ -13,15 +11,6 @@ function get_categories_data() {
 
 	return axios.get(categories_URL).then((response) => response.data)
 }
-// function DeleteCategory(props){
-
-// 	console.log({props});
-// 	useEffect(() => {
-// 		// DELETE request using axios with error handling
-// 		axios.delete('http://[::1]:4000/categories/'+{props})
-
-// }, []);
-// }
 function Categories(props) {
 	const [categories, setCategories] = useState([]);
 	useEffect(() => {
@@ -71,13 +60,6 @@ function Categories(props) {
                               {category.name}
                             </Typography>
                             <br></br>
-                            {/* <Button href={'/categories/' + category.id + '/view'}
-							 variant="outlined" color="success">View</Button>&nbsp;
-                            <Button href={'/categories/' + category.id + '/edit'}
-							 variant="outlined" color="info">Edit</Button>&nbsp;
-							 <Button href={'/categories/' + category.id + '/delete'}
-							 variant="outlined" color="error">Delete</Button>&nbsp;
-							  */}
                 			<Button href={'/categories/' + category.id+ '/show'}
 											 variant="outlined" color="success">View</Button>&nbsp;
             {admin && 
@@ -88,7 +70,6 @@ function Categories(props) {
 											 variant="outlined" color="error">Delete</Button>&nbsp; 
             </>
         }
-
                           </CardContent>
                         </Card>
                       </Grid>

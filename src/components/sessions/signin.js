@@ -1,23 +1,19 @@
 import React, { createContext } from 'react'
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import './login.css'
 import { Alert, Grid } from '@mui/material';
-// const AuthContext = createContext({});
-import CSRFToken from './cookies';
 
 function Login() {
-  const AuthContext = createContext({});
-  // const instance = axios.create({
-  //   httpAgent
-  // });
 
-  const [currentUser, setCurrentUser] = React.useState();
+  const [response, setResponse] = React.useState(false);
 
   let history = useHistory();
   const [hasError, setError] = React.useState(false);
+
+
   const [formValue, setformValue] = React.useState({
     email: '',
     password: '',
@@ -25,9 +21,6 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const loginFormData = new FormData();
-    loginFormData.append("email", formValue.email)
-    loginFormData.append("password", formValue.password)
 
 	axios.post("http://localhost:4000/login", {
 		email: formValue.email,
@@ -37,7 +30,7 @@ function Login() {
 	).then(response => {
 
 		if (response.status === "201" || response.statusText === 'Created') {
-            history.push("/articles");
+            setResponse(error=> true);
          }
 	})
     .catch(err => {
@@ -46,8 +39,7 @@ function Login() {
 }
   
 
-     console.log("user",currentUser);
-  const handleChange = (event) => {
+   const handleChange = (event) => {
     setformValue({
       ...formValue,
       [event.target.name]: event.target.value
@@ -56,8 +48,7 @@ function Login() {
 
   return (
     <div>
-      {/* <AuthContext.Provider value={{currentUser}} > <Data /> </AuthContext.Provider> */}
-      {console.log(currentUser)}
+
       {hasError &&
         <Grid container justifyContent="center" id="errors" >
           <Alert severity="error" onClose={() => { }}>
@@ -66,6 +57,17 @@ function Login() {
         </Grid>
 
       }
+
+     {response &&
+        <Grid container justifyContent="center" id="errors" >
+          <Alert severity="success" onClose={() => { }}>
+            Login Successful , Congratulations
+          </Alert>
+          <Redirect to="/articles"></Redirect>
+        </Grid>
+
+      }
+     
       <h1 class="loginheading">Login</h1>
 
       {/* <div class="container bg-info rounded" id="login"> */}
@@ -106,15 +108,8 @@ function Login() {
                 backgroundColor: "white"
               }}
             />
-            {/* <button class="btn btn-outline-light btn-lg mt-4"
-              type="submit"
-              sx={{
-                backgroundColor: "info.main"
-              }}
-            >
-              Login
-            </button> */}
-            <button class="btn btn-outline-light btn-lg mt-4"onClick={handleSubmit}>singin</button>
+            
+            <button class="btn btn-outline-light btn-lg mt-4" onClick={handleSubmit}>singin</button>
 
 
           </form>

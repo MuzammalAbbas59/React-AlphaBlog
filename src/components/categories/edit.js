@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Redirect, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Redirect } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import './category.css'
-import { Grid } from '@mui/material';
+import { Alert, Grid } from '@mui/material';
 
 function get_category_data(category_URL) {
   console.log(category_URL);
@@ -15,7 +15,8 @@ function get_category_data(category_URL) {
 function Edit() {
   const params = useParams();
   const category_URL = ("http://[::1]:4000/categories/" + params.id);
-
+  const [hasError, setError] = React.useState(false);
+  const [response, setResponse] = React.useState(false);
   const [category, setcategory] = useState([]);
 
   useEffect(() => {
@@ -30,10 +31,9 @@ function Edit() {
 
   useEffect(() => {
     setformValue(category)
-  }, []);
+  }, [category]);
 
 
-  let history = useHistory();
   console.log(params.id)
   const [formValue, setformValue] = React.useState({
     name: category.name
@@ -47,15 +47,14 @@ function Edit() {
     axios.put(("http://localhost:4000/categories/" + params.id), {
       name: formValue.name
     },
-      { withCredentials: true }
-    ).then(response => {
-      console.log("registation response", response)
-      if (response.status === "201" || response.statusText === 'Created') {
-        console.log("success")
-        // setCurrentUser(response.data.user)
-        //  history.push('/articles')   
-      }
+    { withCredentials: true }
+    ).then(response => {   
+      setResponse(crr=>true); 
     })
+    .catch(err=>{
+      setError(crr=> true);
+    })
+  
   }
 
 
@@ -68,6 +67,27 @@ function Edit() {
 
   return (
     <div>
+
+
+{hasError &&
+        <Grid  id="errors" >
+           <Alert  severity="error" onClose={() => { }}>
+            Sorry cannot be saved,try again
+          </Alert>
+        
+        </Grid>
+      }
+      
+        {response &&
+        <Grid container justifyContent="center" id="errors" >
+          <Alert severity="success" onClose={() => { }}>
+            You have done it  , Congratulations
+          </Alert>
+          <Redirect to="/categories"></Redirect>
+        </Grid>
+
+      }
+
       <h1 class="loginheading">Update Category
       </h1>
       <Grid container id="category" >

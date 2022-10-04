@@ -2,15 +2,7 @@ import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-// import TimeAgo from 'timeago-react';
-import { Link } from 'react-router-dom';
 const articles_URL = "http://[::1]:4000/articles";
-
-function deletearticle(id){
-console.log("id ",id);
-axios.delete('http://[::1]:4000/articles/'+id,{withCredentials: true} )
-  
-}
 function get_articles_data() {
 
 	return axios.get(articles_URL).then((response) => response.data)
@@ -20,26 +12,26 @@ function Articles() {
 	const [articles, setArticles] = useState([]);
 
 
- const [CurrentUser, setCurrentUser] = useState([]);
- const [admin, setadmin] = useState([]);
-const check=false;
-useEffect(() => {
- axios.get("http://localhost:4000/loggedin",
-  { withCredentials: true }
- ).then(response => {
+	const [CurrentUser, setCurrentUser] = useState([]);
+	const [admin, setadmin] = useState([]);
+	const check = false;
+	useEffect(() => {
+		axios.get("http://localhost:4000/loggedin",
+			{ withCredentials: true }
+		).then(response => {
 
-  console.log("get response", response.data.user.admin)
-     if(response.data.user){
-       console.log("responseuser",response.data.user);
-   setCurrentUser(response.data.user.id);
-  }
-  if(response.data.user.admin){
-   setadmin(true);
-  }
- 
- })
-}, []);
- 
+			console.log("get response", response.data.user.admin)
+			if (response.data.user) {
+				console.log("responseuser", response.data.user);
+				setCurrentUser(response.data.user.id);
+			}
+			if (response.data.user.admin) {
+				setadmin(true);
+			}
+
+		})
+	}, []);
+
 	useEffect(() => {
 		let mounted = true;
 		get_articles_data().then((items) => {
@@ -50,13 +42,13 @@ useEffect(() => {
 		return () => { (mounted = false) };
 	}, []);
 
-var flag=true;
+	var flag = true;
 	return (
 		<div>
 			<h1>Articles from api are </h1>
 			<Container>
 				{articles.map((article) => {
-     
+
 					return (
 						<div key={article.id}>
 							<Grid container justifyContent="center" alignItems="center">
@@ -71,21 +63,18 @@ var flag=true;
 											</Typography>
 											<br></br>
 											<Button href={'/articles/' + article.id + '/show'}
-											 variant="outlined" color="success">View</Button>&nbsp;
-												
-           {article.user_id == CurrentUser &&
-											<>
-              <Button href={"/articles/" + article.id + "/edit"}
-														  variant="outlined">Edit</Button>
+												variant="outlined" color="success">View</Button>&nbsp;
 
-              <Button href={"/articles/" + article.id + "/delete"}
-														 variant="outlined" >	Delete</Button>
-          						</>
-													}
-           
+											{article.user_id == CurrentUser &&
+												<>
+													<Button href={"/articles/" + article.id + "/edit"}
+														variant="outlined">Edit</Button>
 
-          
-         
+													<Button href={"/articles/" + article.id + "/delete"}
+														variant="outlined" >	Delete</Button>
+												</>
+											}
+
 										</CardContent>
 									</Card>
 								</Grid>

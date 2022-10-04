@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import TimeAgo from 'timeago-react';
-import { Link } from 'react-router-dom';
 import axios from "axios";
 import { Container } from "@mui/system";
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";

@@ -20,12 +20,18 @@ function Appbar() {
 			if(response.data.user.admin){
 				setadmin(true);
 			}
-			setloggedin(set => true)
+			setloggedin(true)
 		
 		})
-	}, []);
+		
+.catch(err => {
+	// setError(error=> true);
+	})
+	});
+	
 
-
+	
+console.log("app",loggedin);
 	return (
 		<div>
 			<BrowserRouter>

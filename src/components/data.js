@@ -17,90 +17,44 @@ import DeleteUser from './users/delete';
 import EditUser from './users/edit';
 import Login from './sessions/signin';
 import NewUser from './users/new';
-import { AppBar, Typography, Toolbar, Tabs, Tab } from '@mui/material';
-import { Box } from '@mui/system';
-
 import Navigation from './navigation';
-import axios from 'axios';
-import Navbar from './Navbar';
-import { AuthenticatedRoutes, UnauthenticatedRoutes } from "./routes";
-import { useAuth } from '../context/authcontext';
 import Appbar from './Appbar';
-
+import axios from 'axios';
+import { useEffect } from 'react';
+import { AuthenticatedRoutes, UnauthenticatedRoutes } from './routes';
+import ProtectedRoute from "./requireslogin";
 
 function Data() {
-	// const value = React.useContext(AuthContext);
-	// const ab = useAuth();
+
+	const [loggedin, setloggedin] = React.useState(false);
+   var flag=false;
+	useEffect(() => {
+		axios.get("http://localhost:4000/loggedin",
+			{ withCredentials: true }
+		).then(response => {
+
+		           setloggedin(crr=> true);
+							 flag=true;
+					 
+		})
+			.catch(err => {
+					// setError(error=> true);
+			})
+	});
+		
+
+	console.log("loggedin: ", loggedin);
+
+	console.log("flag: ", flag);
 
 	return (
 		<div>
+
+			<Appbar></Appbar>
+			<div>
+				{/* {loggedin ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />} */}
+			</div>
 			
-<Appbar></Appbar>
-			<BrowserRouter>
-				<Switch>
-
-					<Route path="/articles/new">
-						<NewArticle />
-					</Route>
-					<Route path="/articles/:id/edit">
-						<EditArticle />
-					</Route>
-					<Route path="/articles/:id/delete">
-						<DeleteArticle />
-					</Route>
-					<Route path="/articles/:id/show">
-						<ShowArticle />
-					</Route>
-					<Route path="/articles">
-						<Articles />
-					</Route>
-
-
-					<Route path="/categories/new">
-						<NewCategory />
-					</Route>
-					<Route path="/categories/:id/show">
-						<ShowCategory />
-					</Route>
-					<Route path="/categories/:id/edit">
-						<EditCategory />
-					</Route>
-					<Route path="/categories/:id/delete">
-						<DeleteCategory />
-					</Route>
-					<Route path="/categories">
-						<Categories />
-
-
-					</Route>
-					<Route path="/users/:id/show">
-						<ShowUser />
-					</Route>
-					<Route path="/users/:id/delete">
-						<DeleteUser />
-					</Route>
-					<Route path="/users/:id/edit">
-						<EditUser />
-					</Route>
-					<Route path="/signup">
-						<NewUser />
-					</Route>
-
-					<Route path="/users">
-						<Users />
-					</Route>
-
-					<Route path="/login">
-						<Login />
-					</Route>
-
-	
-					<Route path="/">
-						<Navigation />
-					</Route>
-				</Switch>
-
-			</BrowserRouter>
 		</div>
 	)
 }

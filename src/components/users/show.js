@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Grid, TextareaAutosize } from '@mui/material';
+import { Grid} from '@mui/material';
 
 function get_user_data(user_URL) {
   console.log(user_URL);
@@ -85,7 +85,7 @@ var check=false;
   <CardActions>
     {check &&
       <>
-        <Button href={"/user/" + params.id + "/edit"} 
+        <Button href={"/users/" + params.id + "/edit"} 
         size="small">Edit</Button>
         
           <Button href={"/users/" + params.id + "/delete"} 

@@ -6,10 +6,8 @@ import { Redirect, useParams } from 'react-router-dom';
 function DeleteUser() {
     const params=useParams();
         console.log(params.id);
-        useEffect(() => {
-            
-            axios.delete('http://[::1]:4000/users/'+params.id ,{ withCredentials: true })
-                    
+        useEffect(() => {     
+            axios.delete('http://[::1]:4000/users/'+params.id ,{ withCredentials: true })               
     }, []);
     
     
