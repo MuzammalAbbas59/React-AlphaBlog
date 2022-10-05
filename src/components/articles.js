@@ -13,7 +13,7 @@ function Articles() {
 
 
 	const [CurrentUser, setCurrentUser] = useState([]);
-	const [admin, setadmin] = useState([false]);
+	const [admin, setadmin] = useState(false);
 	const check = false;
 
 	useEffect(() => {
@@ -27,6 +27,7 @@ function Articles() {
 				setCurrentUser(response.data.user.id);
 			}
 			if (response.data.user.admin) {
+
 				setadmin(crr=>true);
 			}
 
@@ -67,7 +68,7 @@ function Articles() {
 											<Button href={'/articles/' + article.id + '/show'}
 												variant="outlined" color="success">View</Button>&nbsp;
 
-											  {(admin || article.user_id == CurrentUser) &&
+											  {((article.user_id == CurrentUser) || (admin)) &&
 												<>
 													<Button href={"/articles/" + article.id + "/edit"}
 														variant="outlined">Edit</Button>

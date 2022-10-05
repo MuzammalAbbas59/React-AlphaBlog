@@ -28,7 +28,7 @@ function Users(props) {
 	}, []);
 
 	const [CurrentUser, setCurrentUser] = useState([]);
-	const [admin, setadmin] = useState([]);
+	const [admin, setadmin] = useState(false);
 	const history=useHistory();
 	const check = false;
 	useEffect(() => {
@@ -76,8 +76,8 @@ function Users(props) {
 
 											<Button href={'/users/' + user.id + '/show'}
 												variant="outlined" color="success">Show</Button>
-									  {(admin || user.id == CurrentUser) &&
-											<>
+									  {((user.id == CurrentUser) || (admin)) &&
+												<>
 													<Button href={'/users/' + user.id + '/edit'}
 														variant="outlined" color="info">Edit</Button>          				
 														

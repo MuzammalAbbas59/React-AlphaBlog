@@ -30,28 +30,34 @@ import Appbar from './components/Appbar';
 function App() {
 
 	const [loggedin, setloggedin] = React.useState(false);
-  	useEffect(() => {
+    const [logged, setlogged] = React.useState(false);
+      
+	useEffect(() => {
 		axios.get("http://localhost:4000/loggedin",
 			{ withCredentials: true }
 		).then(response => {
 
-		           setloggedin(crr=> true);
-						
+			setloggedin(crr => true);
+			setlogged(crr => true);
+
 		})
 			.catch(err => {
-			
+				setlogged(crr => true);
 			})
 	});
-		
-  return (
 
-    <div className="App">
-				  <Appbar></Appbar>
-      	 	{!loggedin &&  <UnauthenticatedRoutes />}
-			{loggedin &&  <AuthenticatedRoutes />}	
-      <Footer></Footer>
-    </div>
-  );
+	return (
+
+		<div className="App">
+			<Appbar></Appbar>
+			{logged &&
+			<>
+			{!loggedin? <UnauthenticatedRoutes /> : <AuthenticatedRoutes/>}
+			</>
+}
+			<Footer></Footer>
+		</div>
+	);
 }
 
 export default App;

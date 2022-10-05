@@ -22,7 +22,7 @@ function ShowArticle() {
   const [article, setArticle] = useState([]);
 
   const [CurrentUser, setCurrentUser] = useState([]);
-  const [admin, setadmin] = useState([]);
+  const [admin, setadmin] = useState(false);
   var check = false;
   useEffect(() => {
     axios.get("http://localhost:4000/loggedin",
@@ -86,8 +86,8 @@ function ShowArticle() {
 						</Typography>
         </CardContent>
         <CardActions>
-          {(admin || article.user_id == CurrentUser) &&
-             <>
+        {((article.user_id == CurrentUser) || (admin)) &&
+									     <>
               <Button href={"/articles/" + params.id + "/edit"} size="small">Edit</Button>
 
               <Button href={"/articles/" + params.id + "/delete"} size="small">Delete</Button>

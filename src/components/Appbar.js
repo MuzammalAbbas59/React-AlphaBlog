@@ -39,18 +39,17 @@ function Appbar() {
 				<nav className="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
 					<ul className="navbar-nav mr-auto ">
 						<Button href='/' variant="text" color="success">Alpha-Blog</Button>&nbsp;
-	      		<li className="nav-item dropdown" >
+						<li className="nav-item dropdown" >
 							<a className="nav-link dropdown-toggle" href="/articles" id="navbar-dropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Articles
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<Button href='/articles' variant="text" color="success">All Articles</Button>&nbsp;
-	 
-								{loggedin &&
+            		{loggedin &&
 									<>
 										<Button href='/articles/new' variant="text" color="success">New Article</Button>&nbsp;
-	 
-										
+
+
 									</>
 								}
 							</ul>
@@ -62,13 +61,13 @@ function Appbar() {
 								Categories
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<Button href='/categories'  color="success">All Categories</Button>&nbsp;
-	           	{loggedin && admin &&
+								<Button href='/categories' color="success">All Categories</Button>&nbsp;
+								{(loggedin && admin) &&
 									<>
-							<Button href='/categories/new' variant="text" color="success">New Category</Button>&nbsp;
-	 
+										<Button href='/categories/new' variant="text" color="success">New Category</Button>&nbsp;
+
 									</>
-	
+
 								}
 							</ul>
 						</li>
@@ -79,21 +78,21 @@ function Appbar() {
 							</a>
 							<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
 								<Button href='/users' variant="text" color="success">List of users</Button>
-								
+
 								{/* <li><Link to="/users/new" className= "dropdown-item" >Create new Category</Link></li> */}
 							</ul>
 						</li>
 						<li className="nav-item dropdown">
-						{!loggedin &&
-							<>
-								<Button href='/login' variant="text" color="success">login</Button>
-								<Button href='/signup' variant="text" color="success">SignUp</Button>
-								
-							</>
-						}
-						{loggedin &&
-							<Button href='/login' onClick={loguserout} variant="text" color="success">Logout</Button>
-						}
+							{!loggedin &&
+								<>
+									<Button href='/login' variant="text" color="success">login</Button>
+									<Button href='/signup' variant="text" color="success">SignUp</Button>
+
+								</>
+							}
+							{loggedin &&
+								<Button href='/login' onClick={loguserout} variant="text" color="success">Logout</Button>
+							}
 						</li>
 					</ul>
 					{admin &&

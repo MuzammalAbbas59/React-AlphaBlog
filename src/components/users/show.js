@@ -32,7 +32,7 @@ function Show() {
   }, []);
 
   const [CurrentUser, setCurrentUser] = useState([]);
-  const [admin, setadmin] = useState([]);
+  const [admin, setadmin] = useState(false);
   // const [check,setCheck] = useState([false]);
 
   useEffect(() => {
@@ -83,8 +83,8 @@ var check=false;
     </Typography>
   </CardContent>
   <CardActions>
-    {(admin || user.id == CurrentUser) &&
-
+  {((user.id == CurrentUser) || (admin)) &&
+										
       <>
         <Button href={"/users/" + params.id + "/edit"} 
         size="small">Edit</Button>

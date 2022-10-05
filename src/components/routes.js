@@ -22,7 +22,7 @@ import ProtectedRoute from "./requireslogin";
 
 export const AuthenticatedRoutes = () => {
     return (
-        <Router >
+        <Router forceRefresh={true} >
             <Switch>
 					<Route exact path="/articles/new">
 						<NewArticle />
@@ -40,14 +40,13 @@ export const AuthenticatedRoutes = () => {
 						<Articles />
 					</Route>
 
-
 					<Route exact path="/categories/new">
 						<NewCategory />
 					</Route>
 					<Route exact path="/categories/:id/show">
 						<ShowCategory />
 					</Route>
-					<Route exact path="/categories/:id/edit">
+					<Route  path="/categories/:id/edit">
 						<EditCategory />
 					</Route>
 					<Route exact path="/categories/:id/delete">
@@ -64,14 +63,14 @@ export const AuthenticatedRoutes = () => {
 					<Route exact path="/users/:id/delete">
 						<DeleteUser />
 					</Route>
-					<Route exact path="/users/:id/edit">
+					<Route exact  path="/users/:id/edit">
 						<EditUser />
 					</Route>
-					<Route exact path="/signup">
+					<Route  exact path="/signup">
 						<NewUser />
 					</Route>
 
-					<Route exact path="/users">
+					<Route path="/users">
 						<Users />
 					</Route>
 
@@ -84,11 +83,12 @@ export const AuthenticatedRoutes = () => {
             </Switch>
         </Router>
     );
+	
 };
 
 export const UnauthenticatedRoutes = () => {
     return (
-        <Router>
+        <Router forceRefresh={true}>
 
             <Switch>
 		         	<Route exact path="/">
@@ -104,20 +104,20 @@ export const UnauthenticatedRoutes = () => {
 					</Route>
                      
                     <Route exact path="/articles">
-						<Users />
+						< Articles />
 					</Route>
                      
                     <Route exact path="/categories">
-						<Users />
+						<Categories />
 					</Route>
 
 					<Route exact path="/login">
 						<Login />
 					</Route>
 
-					<Route path="*" >
+					<Route exact path="*" >
 					<Login />
-					</Route>
+					</Route> 
 
             </Switch>
 

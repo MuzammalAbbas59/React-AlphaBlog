@@ -63,7 +63,7 @@ function Login() {
           <Alert severity="success" onClose={() => { }}>
             Login Successful , Congratulations
           </Alert>
-          <Redirect to="/articles"></Redirect>
+          <Redirect to="/"></Redirect>
         </Grid>
 
       }
