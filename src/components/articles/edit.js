@@ -4,12 +4,20 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import './articles.css'
-import { Alert, Grid } from '@mui/material';
+import { Alert, Button, Grid,FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
+const categories_URL = "http://[::1]:4000/categories";
 
 function get_article_data(article_URL) {
   console.log(article_URL);
   return axios.get(article_URL).then((response) => response.data)
 }
+
+function get_categories_data() {
+
+  return axios.get(categories_URL).then((response) => response.data)
+}
+
 
 function Edit() {
   const params = useParams();
@@ -24,22 +32,22 @@ function Edit() {
     let mounted = true;
     get_article_data(article_URL).then((item) => {
       if (mounted) {
-        setarticle(item);
+        setarticle(item.article);
       }
     });
     return () => { (mounted = false) };
   }, []);
 
+
+  useEffect(() => {
+    setformValue(article)
+  }, [article]);
+
+
   const [formValue, setformValue] = useState({
     title: article.title,
     description: article.description
   });
-
-  useEffect(() => {
-
-    setformValue(article)
-  }, [article]);
-
 
   const handleChange = (event) => {
     setformValue({
@@ -49,11 +57,18 @@ function Edit() {
   }
 
 
+  const [selectedCategory, setSelectedCategory] = useState([]);
+
+  const handleChangeCategory = (e) => {
+    setSelectedCategory(e.target.value);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     axios.put(("http://localhost:4000/articles/" + params.id), {
       title: formValue.title,
-      description: formValue.description
+      description: formValue.description,
+      category_ids: selectedCategory,
     },
 
       { withCredentials: true }
@@ -66,6 +81,16 @@ function Edit() {
 
   }
 
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    let mounted = true;
+    get_categories_data().then((items) => {
+      if (mounted) {
+        setCategories(items);
+      }
+    });
+    return () => { (mounted = false) };
+  }, [categories]);
 
 
   return (
@@ -126,11 +151,36 @@ function Edit() {
               value={formValue.description}
               onChange={handleChange}
             />
-            <button class="btn btn-outline-light btn-lg mt-4"
-              type="submit"
-            >
-              Update Article
-            </button>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-helper-label">Categories</InputLabel>
+
+              <Select
+                labelId="country-label"
+                id="country"
+                // value={selectedCategory}
+                value={[selectedCategory]}
+                onChange={handleChangeCategory}
+                SelectProps={{
+                  multiple: true
+                }}
+                defaultValue=" ">
+
+                {categories.map((data, index) => (
+                  <MenuItem
+                    key={data.id}
+                    value={data.id}
+                  >
+                    {data.name}
+                  </MenuItem>
+                  //  </div>
+                ))}
+              </Select>
+            </FormControl>
+
+            <h1></h1>
+
+          <Button type="submit" sx={{m:4}} variant="contained" color="info">Submit</Button>
+								
           </form>
         </Box>
       </Grid>

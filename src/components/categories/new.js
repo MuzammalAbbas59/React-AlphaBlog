@@ -3,7 +3,7 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import './category.css'
-import { Alert, Grid } from '@mui/material';
+import { Alert, Button, Grid } from '@mui/material';
 import { Redirect, useHistory } from 'react-router-dom';
 
 
@@ -92,11 +92,8 @@ function New() {
               value={formValue.name}
               onChange={handleChange}
             />
-            <button class="btn btn-outline-light btn-lg mt-4"
-              type="submit"
-            >
-              Create Category
-            </button>
+            <Button type="submit" sx={{m:4}} variant="contained" color="info">Submit</Button>
+								
           </form>
         </Box>
       </Grid>

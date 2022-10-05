@@ -83,7 +83,8 @@ var check=false;
     </Typography>
   </CardContent>
   <CardActions>
-    {check &&
+    {(admin || user.id == CurrentUser) &&
+
       <>
         <Button href={"/users/" + params.id + "/edit"} 
         size="small">Edit</Button>

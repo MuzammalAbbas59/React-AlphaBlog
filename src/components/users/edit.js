@@ -4,8 +4,9 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import '../sessions/login.css'
-import { Alert, Grid } from '@mui/material';
+import { Alert, Button, Grid } from '@mui/material';
 import { Snackbar } from '@material-ui/core';
+
 
 function get_user_data(user_URL) {
   return axios.get(user_URL).then((response) => response.data)
@@ -141,12 +142,8 @@ function Edit() {
               value={formValue.password}
               onChange={handleChange}
             />
-            <button class="btn btn-outline-light btn-lg mt-4"
-              type="submit"
-            >
-              Update User
-            </button>
-
+           <Button type="submit" sx={{m:4}} variant="contained" color="info">Submit</Button>
+								
           </form>
         </Box>
 

@@ -22,63 +22,63 @@ import ProtectedRoute from "./requireslogin";
 
 export const AuthenticatedRoutes = () => {
     return (
-        <Router>
+        <Router >
             <Switch>
-					<Route path="/articles/new">
+					<Route exact path="/articles/new">
 						<NewArticle />
 					</Route>
-					<Route path="/articles/:id/edit">
+					<Route exact path="/articles/:id/edit">
 						<EditArticle />
 					</Route>
-					<Route path="/articles/:id/delete">
+					<Route exact path="/articles/:id/delete">
 						<DeleteArticle />
 					</Route>
-					<Route path="/articles/:id/show">
+					<Route exact path="/articles/:id/show">
 						<ShowArticle />
 					</Route>
-					<Route path="/articles">
+					<Route exact path="/articles">
 						<Articles />
 					</Route>
 
 
-					<Route path="/categories/new">
+					<Route exact path="/categories/new">
 						<NewCategory />
 					</Route>
-					<Route path="/categories/:id/show">
+					<Route exact path="/categories/:id/show">
 						<ShowCategory />
 					</Route>
-					<Route path="/categories/:id/edit">
+					<Route exact path="/categories/:id/edit">
 						<EditCategory />
 					</Route>
-					<Route path="/categories/:id/delete">
+					<Route exact path="/categories/:id/delete">
 						<DeleteCategory />
 					</Route>
-					<Route path="/categories">
+					<Route exact path="/categories">
 						<Categories />
 
 
 					</Route>
-					<Route path="/users/:id/show">
+					<Route exact path="/users/:id/show">
 						<ShowUser />
 					</Route>
-					<Route path="/users/:id/delete">
+					<Route exact path="/users/:id/delete">
 						<DeleteUser />
 					</Route>
-					<Route path="/users/:id/edit">
+					<Route exact path="/users/:id/edit">
 						<EditUser />
 					</Route>
-					<Route path="/signup">
+					<Route exact path="/signup">
 						<NewUser />
 					</Route>
 
-					<Route path="/users">
+					<Route exact path="/users">
 						<Users />
 					</Route>
 
-					<Route path="/login">
+					<Route  exact path="/login">
 						<Login />
 					</Route>
-					<Route path="/">
+					<Route exact path="/">
 						<Navigation />
 					</Route>
             </Switch>
@@ -91,30 +91,32 @@ export const UnauthenticatedRoutes = () => {
         <Router>
 
             <Switch>
-               
-					<Route path="/signup">
+		         	<Route exact path="/">
+						<Navigation />
+					</Route>
+
+					<Route exact path="/signup">
 						<NewUser />
 					</Route>
 
-					<Route path="/users">
+					<Route exact path="/users">
 						<Users />
 					</Route>
                      
-                    <Route path="/articles">
+                    <Route exact path="/articles">
 						<Users />
 					</Route>
                      
-                    <Route path="/categories">
+                    <Route exact path="/categories">
 						<Users />
 					</Route>
 
-					<Route path="/login">
+					<Route exact path="/login">
 						<Login />
 					</Route>
 
-	
-					<Route path="/">
-						<Navigation />
+					<Route path="*" >
+					<Login />
 					</Route>
 
             </Switch>

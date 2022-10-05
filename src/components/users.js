@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container } from "@mui/system";
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 const users_URL = "http://[::1]:4000/users";
 
@@ -15,6 +16,7 @@ function get_users_data() {
 
 function Users(props) {
 	const [users, setUsers] = useState([]);
+
 	useEffect(() => {
 		let mounted = true;
 		get_users_data().then((items) => {
@@ -27,6 +29,7 @@ function Users(props) {
 
 	const [CurrentUser, setCurrentUser] = useState([]);
 	const [admin, setadmin] = useState([]);
+	const history=useHistory();
 	const check = false;
 	useEffect(() => {
 		axios.get("http://localhost:4000/loggedin",
@@ -43,6 +46,7 @@ function Users(props) {
 			}
 
 		})
+		
 	}, []);
 
 
@@ -72,7 +76,7 @@ function Users(props) {
 
 											<Button href={'/users/' + user.id + '/show'}
 												variant="outlined" color="success">Show</Button>
-									  {		user.id == CurrentUser &&
+									  {(admin || user.id == CurrentUser) &&
 											<>
 													<Button href={'/users/' + user.id + '/edit'}
 														variant="outlined" color="info">Edit</Button>          				

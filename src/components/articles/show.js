@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Chip, Grid } from '@mui/material';
 
 function get_article_data(article_URL) {
   console.log(article_URL);
@@ -44,18 +44,20 @@ function ShowArticle() {
     check = true;
   }
 
+  const [CategoryArticle, setcategoryArticle] = useState([]);
 
   useEffect(() => {
     let mounted = true;
     get_article_data(article_URL).then((item) => {
       if (mounted) {
-        setArticle(item);
-
+        setArticle(item.article);
+        setcategoryArticle(item.category[0].name);
       }
     });
     return () => { (mounted = false) };
   }, []);
 
+  console.log("cat",CategoryArticle);
   var flag = true;
   return (
 
@@ -78,9 +80,13 @@ function ShowArticle() {
           <Typography variant="body2" color="text.secondary">
             <p className="card-text">{article.description}</p>
           </Typography>
+          
+          <Typography variant="p" component="div">
+          <Chip sx={{m:4}} label={CategoryArticle} color="success"></Chip>
+						</Typography>
         </CardContent>
         <CardActions>
-          {check &&
+          {(admin || article.user_id == CurrentUser) &&
              <>
               <Button href={"/articles/" + params.id + "/edit"} size="small">Edit</Button>
 

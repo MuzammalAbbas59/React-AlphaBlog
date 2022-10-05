@@ -3,9 +3,9 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import './articles.css'
+
 import {
-  Alert, Button, FormControl, FormControlLabel, Grid, InputLabel,
-  MenuItem, Radio, RadioGroup, Select, Snackbar, Typography
+  Alert, Button, FormControl, Grid, InputLabel, MenuItem, Select
 } from '@mui/material';
 import { Redirect, useHistory } from 'react-router-dom'
 
@@ -20,29 +20,29 @@ function get_categories_data() {
 
 function New() {
 
+
   const [formValue, setformValue] = React.useState({
     title: '',
-    description: '',
-    categories: ' '
+    description: ''
   });
 
   const [hasError, setError] = React.useState(false);
   const [response, setResponse] = React.useState(false);
 
+  const [selectedCategory, setSelectedCategory] = useState([]);
+
+  const handleChangeCategory = (e) => {
+    setSelectedCategory(e.target.value);
+  }
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { title, description, categories } = formValue;
-
-    const loginFormData = {
-      title,
-      description,
-      categories
-    }
-
+    const { title, description, category_ids } = formValue;
     axios.post("http://localhost:4000/articles", {
       title: formValue.title,
       description: formValue.description,
-      categories: formValue.categories
+      category_ids: selectedCategory,
 
     },
       { withCredentials: true }
@@ -71,9 +71,7 @@ function New() {
       }
     });
     return () => { (mounted = false) };
-  }, []);
-
-
+  }, [categories]);
 
   return (
     <div>
@@ -135,21 +133,36 @@ function New() {
               onChange={handleChange}
 
             />
-           <h1 class="col-1 col-form-label text-light">Category:</h1>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-helper-label">Categories</InputLabel>
 
-            <TextField fullWidth
-              id="fullWidth"
-              type="text"
-              name="categories"
-              placeholder="enter category which is available"
-              value={formValue.categories}
-              onChange={handleChange}
+              <Select
+                labelId="country-label"
+                id="country"
+                // value={selectedCategory}
+                value={[selectedCategory]}
+                onChange={handleChangeCategory}
+                SelectProps={{
+                  multiple: true
+                }}
+                defaultValue=" ">
 
-            />
-            
-            <Button type="submit"
-              variant="contained" color="success">Create</Button>&nbsp;
-{/* 
+                {categories.map((data, index) => (
+                  <MenuItem
+                    key={data.id}
+                    value={data.id}
+                  >
+                    {data.name}
+                  </MenuItem>
+                  //  </div>
+                ))}
+              </Select>
+            </FormControl>
+
+            <h1></h1>
+
+            <Button type="submit" sx={{ m: 4 }} variant="contained" color="info">Submit</Button>
+            {/* 								
          {categories.map((category) => { 
           return (
              <div key={category.id}>

@@ -1,11 +1,12 @@
+import { Button } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { BrowserRouter, Link } from 'react-router-dom'
 
-function loguserout(){
+function loguserout() {
 	axios.delete("http://localhost:4000/logout",
-	{ withCredentials: true }
-)
+		{ withCredentials: true }
+	)
 }
 
 function Appbar() {
@@ -17,37 +18,39 @@ function Appbar() {
 			{ withCredentials: true }
 		).then(response => {
 
-			if(response.data.user.admin){
+			if (response.data.user.admin) {
 				setadmin(true);
 			}
 			setloggedin(true)
-		
-		})
-		
-.catch(err => {
-	// setError(error=> true);
-	})
-	});
-	
 
-	
-console.log("app",loggedin);
+		})
+
+			.catch(err => {
+				// setError(error=> true);
+			})
+	});
+
+
+
+	console.log("app", loggedin);
 	return (
 		<div>
 			<BrowserRouter>
 				<nav className="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
 					<ul className="navbar-nav mr-auto ">
-						<li><Link to="/" className="nav-link" id="title" ><h5>Alpha-Blog</h5></Link></li>
-
-						<li className="nav-item dropdown" >
+						<Button href='/' variant="text" color="success">Alpha-Blog</Button>&nbsp;
+	      		<li className="nav-item dropdown" >
 							<a className="nav-link dropdown-toggle" href="/articles" id="navbar-dropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Articles
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><Link to="/articles" className="dropdown-item" >List of articles</Link></li>
+								<Button href='/articles' variant="text" color="success">All Articles</Button>&nbsp;
+	 
 								{loggedin &&
 									<>
-										<li><Link to="/articles/new" className="dropdown-item" >Create new article</Link></li>
+										<Button href='/articles/new' variant="text" color="success">New Article</Button>&nbsp;
+	 
+										
 									</>
 								}
 							</ul>
@@ -59,12 +62,14 @@ console.log("app",loggedin);
 								Categories
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><Link to="/Categories" className="dropdown-item" >List of categories</Link></li>
-							{loggedin && admin &&
+							<Button href='/categories'  color="success">All Categories</Button>&nbsp;
+	           	{loggedin && admin &&
 									<>
-							<li><Link to="/categories/new" className="dropdown-item" >Create new Category</Link></li>
-							</>
-							}
+							<Button href='/categories/new' variant="text" color="success">New Category</Button>&nbsp;
+	 
+									</>
+	
+								}
 							</ul>
 						</li>
 
@@ -73,22 +78,26 @@ console.log("app",loggedin);
 								Users
 							</a>
 							<ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li><Link to="/users" className="dropdown-item" >List of Users</Link></li>
+								<Button href='/users' variant="text" color="success">List of users</Button>
+								
 								{/* <li><Link to="/users/new" className= "dropdown-item" >Create new Category</Link></li> */}
 							</ul>
 						</li>
+						<li className="nav-item dropdown">
 						{!loggedin &&
 							<>
-								<li><Link to="/login" className="nav-link">Login</Link></li>
-								<li><Link to="/signup" className="nav-link">SignUp</Link></li>
+								<Button href='/login' variant="text" color="success">login</Button>
+								<Button href='/signup' variant="text" color="success">SignUp</Button>
+								
 							</>
-						}			
+						}
 						{loggedin &&
-						<li><Link to="/" onClick={loguserout} className="nav-link">Logout</Link></li>
-					}
-						</ul>
+							<Button href='/login' onClick={loguserout} variant="text" color="success">Logout</Button>
+						}
+						</li>
+					</ul>
 					{admin &&
-					<p1  className="nav-link">(Admin)</p1>
+						<p1 className="nav-link">(Admin)</p1>
 					}
 
 					<form class="d-flex mx-auto" id="search">

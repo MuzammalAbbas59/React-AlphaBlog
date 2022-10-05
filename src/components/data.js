@@ -26,33 +26,11 @@ import ProtectedRoute from "./requireslogin";
 
 function Data() {
 
-	const [loggedin, setloggedin] = React.useState(false);
-   var flag=false;
-	useEffect(() => {
-		axios.get("http://localhost:4000/loggedin",
-			{ withCredentials: true }
-		).then(response => {
-
-		           setloggedin(crr=> true);
-							 flag=true;
-					 
-		})
-			.catch(err => {
-					// setError(error=> true);
-			})
-	});
-		
-
-	console.log("loggedin: ", loggedin);
-
-	console.log("flag: ", flag);
 
 	return (
 		<div>
 
-			<Appbar></Appbar>
 			<div>
-				{/* {loggedin ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />} */}
 			</div>
 			
 		</div>

@@ -13,8 +13,9 @@ function Articles() {
 
 
 	const [CurrentUser, setCurrentUser] = useState([]);
-	const [admin, setadmin] = useState([]);
+	const [admin, setadmin] = useState([false]);
 	const check = false;
+
 	useEffect(() => {
 		axios.get("http://localhost:4000/loggedin",
 			{ withCredentials: true }
@@ -26,7 +27,7 @@ function Articles() {
 				setCurrentUser(response.data.user.id);
 			}
 			if (response.data.user.admin) {
-				setadmin(true);
+				setadmin(crr=>true);
 			}
 
 		})
@@ -61,11 +62,12 @@ function Articles() {
 											<Typography variant="p" component="div">
 												{article.description}
 											</Typography>
+										
 											<br></br>
 											<Button href={'/articles/' + article.id + '/show'}
 												variant="outlined" color="success">View</Button>&nbsp;
 
-											{article.user_id == CurrentUser &&
+											  {(admin || article.user_id == CurrentUser) &&
 												<>
 													<Button href={"/articles/" + article.id + "/edit"}
 														variant="outlined">Edit</Button>

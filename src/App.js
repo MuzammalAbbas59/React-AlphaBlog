@@ -20,81 +20,35 @@ import Navigation from './components/navigation';
 import Data from './components/data';
 import Footer from './components/footer';
 import Articles from './components/articles';
+import { AuthenticatedRoutes, UnauthenticatedRoutes } from './components/routes';
+import axios from 'axios';
+import { useEffect } from 'react';
+import Appbar from './components/Appbar';
+
+
 
 function App() {
 
+	const [loggedin, setloggedin] = React.useState(false);
+  	useEffect(() => {
+		axios.get("http://localhost:4000/loggedin",
+			{ withCredentials: true }
+		).then(response => {
+
+		           setloggedin(crr=> true);
+						
+		})
+			.catch(err => {
+			
+			})
+	});
+		
   return (
+
     <div className="App">
-        <Data />
-    
-       <BrowserRouter>
-				<Switch>
-          
-
-					<Route path="/articles/new">
-						<NewArticle />
-					</Route>
-					<Route path="/articles/:id/edit">
-						<EditArticle />
-					</Route>
-					<Route path="/articles/:id/delete">
-						<DeleteArticle />
-					</Route>
-					<Route path="/articles/:id/show">
-						<ShowArticle />
-					</Route>
-					<Route path="/articles">
-						<Articles />
-					</Route>
-
-
-					<Route path="/categories/new">
-						<NewCategory />
-					</Route>
-					<Route path="/categories/:id/show">
-						<ShowCategory />
-					</Route>
-
-					<Route path="/categories/:id/edit">
-						<EditCategory />
-					</Route>
-					<Route path="/categories/:id/delete">
-						<DeleteCategory />
-					</Route>
-					<Route path="/categories">
-						<Categories />
-
-
-					</Route>
-					<Route path="/users/:id/show">
-						<ShowUser />
-					</Route>
-					<Route path="/users/:id/delete">
-						<DeleteUser />
-					</Route>
-					<Route path="/users/:id/edit">
-						<EditUser />
-					</Route>
-					<Route path="/signup">
-						<NewUser />
-					</Route>
-
-					<Route path="/users">
-						<Users />
-					</Route>
-
-					<Route path="/login">
-						<Login />
-					</Route>
-
-
-					<Route path="/">
-						<Navigation />
-					</Route>
-				</Switch>
-
-			</BrowserRouter>
-
+				  <Appbar></Appbar>
+      	 	{!loggedin &&  <UnauthenticatedRoutes />}
+			{loggedin &&  <AuthenticatedRoutes />}	
       <Footer></Footer>
     </div>
   );

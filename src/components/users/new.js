@@ -4,7 +4,8 @@ import { Redirect, useHistory } from 'react-router-dom';
 import '../sessions/login.css'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Alert, Grid } from '@mui/material';
+import { Alert, Button, Grid } from '@mui/material';
+
 
 function NewUser() {
   let history = useHistory();
@@ -111,11 +112,8 @@ function NewUser() {
               value={formValue.password}
               onChange={handleChange}
             />
-            <button className="btn btn-outline-light btn-lg mt-4"
-              type="submit"
-            >
-              SignUp
-            </button>
+            <Button type="submit" sx={{m:4}} variant="contained" color="info">Submit</Button>
+								
           </form>
         </Box>
       </Grid>
