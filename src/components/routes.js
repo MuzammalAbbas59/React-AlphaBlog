@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router,Redirect, Switch, Route} from "react-router-dom";
 import Articles from './articles';
 import Users from './users';
 import Categories from './categories';
@@ -80,6 +80,10 @@ export const AuthenticatedRoutes = () => {
 					<Route exact path="/">
 						<Navigation />
 					</Route>
+					<Route exact path="*" >
+						<Redirect to="/"></Redirect>
+				    </Route> 
+
             </Switch>
         </Router>
     );
@@ -116,8 +120,8 @@ export const UnauthenticatedRoutes = () => {
 					</Route>
 
 					<Route exact path="*" >
-					<Login />
-					</Route> 
+						<Redirect to="/login"></Redirect>
+				    </Route> 
 
             </Switch>
 

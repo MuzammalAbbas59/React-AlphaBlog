@@ -44,7 +44,7 @@ function ShowArticle() {
     check = true;
   }
 
-  const [CategoryArticle, setcategoryArticle] = useState([]);
+  const [CategoryArticle, setcategoryArticle] = useState(["zero"]);
 
   useEffect(() => {
     let mounted = true;
@@ -57,14 +57,10 @@ function ShowArticle() {
     return () => { (mounted = false) };
   }, []);
 
-  console.log("cat",CategoryArticle);
   var flag = true;
   return (
 
     <Grid container justifyContent="center" id="card">
-      {console.log("article", article)}
-      {console.log("user", CurrentUser)}
-      {console.log("check", check)}
       <Card sx={{ minWidth: 445, m: 5 }}>
         <CardMedia
           component="img"

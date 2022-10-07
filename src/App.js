@@ -47,9 +47,8 @@ function App() {
 	});
 
 	return (
-
 		<div className="App">
-			<Appbar></Appbar>
+		  <Appbar></Appbar>
 			{logged &&
 			<>
 			{!loggedin? <UnauthenticatedRoutes /> : <AuthenticatedRoutes/>}
